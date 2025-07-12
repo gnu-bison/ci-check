@@ -74,7 +74,8 @@ jobs:
             ${{ env.package }}/config.status
             ${{ env.package }}/log[1234]
             ${{ env.package }}/test-suite.log
-            ${{ env.package }}/tests/test-suite.log
+            ${{ env.package }}/tests/testsuite.log
+            ${{ env.package }}/tests/testsuite.dir/*/testsuite.log
           retention-days: 7
           overwrite: true
       # Doc: https://docs.github.com/en/actions/using-workflows/storing-workflow-data-as-artifacts
