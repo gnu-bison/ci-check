@@ -69,6 +69,8 @@ jobs:
         with:
           name: logs-build-tarball-failed
           path: |
+            ${{ env.package }}/m4/*.m4
+            ${{ env.package }}/configure
             ${{ env.package }}/config.cache
             ${{ env.package }}/config.log
             ${{ env.package }}/config.status
