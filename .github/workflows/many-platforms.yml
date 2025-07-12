@@ -156,7 +156,7 @@ jobs:
             sed -i -e 's|^mirrorlist=|#mirrorlist=|' -e 's|^#baseurl=http://mirror\.centos\.org|baseurl=http://vault.centos.org|' /etc/yum.repos.d/CentOS-Base.repo
             : "Install CentOS Linux packages"
             : "List of packages: http://vault.centos.org/centos/7/os/x86_64/Packages/"
-            yum -y install make gcc gcc-c++
+            yum -y install m4 make gcc gcc-c++
             cd /work
             ls -l
             export CPPFLAGS="-Wall"
@@ -204,7 +204,7 @@ jobs:
             : "                  https://repo.almalinux.org/almalinux/9/CRB/x86_64/os/Packages/"
             : "                  https://repo.almalinux.org/almalinux/9/devel/x86_64/os/Packages/"
             : "Explanation: https://wiki.almalinux.org/repos/AlmaLinux.html"
-            yum -y install make gcc gcc-c++
+            yum -y install m4 make gcc gcc-c++
             cd /work
             ls -l
             export CPPFLAGS="-Wall"
@@ -248,7 +248,7 @@ jobs:
             pwd
             : "Install Alpine Linux packages"
             : "List of packages: https://pkgs.alpinelinux.org/packages"
-            apk add make gcc musl-dev g++
+            apk add m4 make gcc musl-dev g++
             cd /work
             ls -l
             export CPPFLAGS="-Wall"
@@ -292,8 +292,11 @@ jobs:
       - run: pwd
       # Install Homebrew packages.
       # List of packages: https://formulae.brew.sh/
-      # - run: brew install ...
+      - run: brew install m4
       - run: |
+          PATH=${HOMEBREW_PREFIX-/usr/local}/opt/m4/bin:/usr/local/bin:$PATH
+          : "Set M4 environment variable, in order to ignore the broken 'gm4' that is also found in PATH."
+          export M4=m4
           pwd
           export CPPFLAGS="-Wall"
           ./build-on.sh '${{ env.package }}' '' 'make'
@@ -341,7 +344,7 @@ jobs:
             pwd
             : "Install FreeBSD packages"
             : "List of packages: https://ports.freebsd.org/cgi/ports.cgi"
-            : pkg install -y ...
+            pkg install -y m4
             ls -l
             export CPPFLAGS="-I/usr/local/include -Wall"
             export LDFLAGS="-L/usr/local/lib"
@@ -388,10 +391,7 @@ jobs:
             pwd
             : "Install NetBSD packages"
             : "List of packages: https://ftp.netbsd.org/pub/pkgsrc/current/pkgsrc/index-all.html"
-            : /usr/sbin/pkg_add ...
-            : "or"
-            : /usr/sbin/pkg_add pkgin
-            : pkgin install ...
+            /usr/sbin/pkg_add m4-1.4.19nb1
             ls -l
             export CPPFLAGS="-I/usr/pkg/include -Wall"
             export LDFLAGS="-L/usr/pkg/lib"
@@ -443,7 +443,7 @@ jobs:
             pwd
             : "Install OpenBSD packages"
             : "List of packages: https://cdn.openbsd.org/pub/OpenBSD/7.6/packages/amd64/"
-            pkg_add g++
+            pkg_add m4 g++
             ls -l
             export CPPFLAGS="-I/usr/local/include -Wall"
             export LDFLAGS="-L/usr/local/lib"
@@ -594,7 +594,7 @@ jobs:
           platform: ${{ matrix.bitness == 32 && 'x86' || 'x86_64' }}
           # Install Cygwin packages.
           # List of packages: https://cygwin.com/packages/package_list.html
-          packages: gcc-core gcc-g++ make
+          packages: m4 gcc-core gcc-g++ make
       - name: cygcheck
         run: cygcheck -V
       - name: cygcheck
@@ -658,7 +658,7 @@ jobs:
           platform: x86_64
           # Install Cygwin packages.
           # List of packages: https://cygwin.com/packages/package_list.html
-          packages: ${{ matrix.bitness == 32 && 'mingw64-i686-gcc-core mingw64-i686-gcc-g++ mingw64-i686-headers mingw64-i686-runtime' || 'mingw64-x86_64-gcc-core mingw64-x86_64-gcc-g++ mingw64-x86_64-headers mingw64-x86_64-runtime' }} make
+          packages: m4 ${{ matrix.bitness == 32 && 'mingw64-i686-gcc-core mingw64-i686-gcc-g++ mingw64-i686-headers mingw64-i686-runtime' || 'mingw64-x86_64-gcc-core mingw64-x86_64-gcc-g++ mingw64-x86_64-headers mingw64-x86_64-runtime' }} make
       - name: cygcheck
         run: cygcheck -V
       - name: cygcheck
@@ -730,7 +730,7 @@ jobs:
           platform: x86_64
           # Install Cygwin packages.
           # List of packages: https://cygwin.com/packages/package_list.html
-          packages: wget make
+          packages: wget m4 make
       - name: cygcheck
         run: cygcheck -V
       - name: cygcheck
