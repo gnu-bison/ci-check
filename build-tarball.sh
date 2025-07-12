@@ -37,7 +37,8 @@ cd "$package"
 rm -f .gitmodules
 
 # Fetch extra files and generate files (uses packages wget, python3, automake, autoconf, m4).
-date --utc --iso-8601 > .tarball-version
+{ $GNULIB_SRCDIR/build-aux/git-version-gen .tarball-version | sed -e 's/modified//'; date --utc --iso-8601; } > .tarball-version.tmp
+mv .tarball-version.tmp .tarball-version
 ./bootstrap --no-git --gnulib-srcdir="$GNULIB_SRCDIR"
 
 # Configure (uses package 'file').
