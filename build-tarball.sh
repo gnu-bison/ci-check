@@ -32,6 +32,7 @@ export GNULIB_SRCDIR=`pwd`/gnulib
 
 # Apply patches.
 (cd "$package" && patch -p1 < ../patches/0001-build-Don-t-hardcode-the-location-of-the-gnulib-dire.patch)
+(cd "$package" && patch -p1 < ../patches/0001-build-Fix-make-dvi-failure.patch)
 
 cd "$package"
 # Force use of the newest gnulib.
