@@ -149,7 +149,7 @@ jobs:
             sed -i -e 's|^mirrorlist=|#mirrorlist=|' -e 's|^#baseurl=http://mirror\.centos\.org|baseurl=http://vault.centos.org|' /etc/yum.repos.d/CentOS-Base.repo
             : "Install CentOS Linux packages"
             : "List of packages: http://vault.centos.org/centos/7/os/x86_64/Packages/"
-            yum -y install make gcc
+            yum -y install make gcc gcc-c++
             cd /work
             ls -l
             export CPPFLAGS="-Wall"
@@ -195,7 +195,7 @@ jobs:
             : "                  https://repo.almalinux.org/almalinux/9/CRB/x86_64/os/Packages/"
             : "                  https://repo.almalinux.org/almalinux/9/devel/x86_64/os/Packages/"
             : "Explanation: https://wiki.almalinux.org/repos/AlmaLinux.html"
-            yum -y install make gcc
+            yum -y install make gcc gcc-c++
             cd /work
             ls -l
             export CPPFLAGS="-Wall"
@@ -237,7 +237,7 @@ jobs:
             pwd
             : "Install Alpine Linux packages"
             : "List of packages: https://pkgs.alpinelinux.org/packages"
-            apk add make gcc musl-dev
+            apk add make gcc musl-dev g++
             cd /work
             ls -l
             export CPPFLAGS="-Wall"
@@ -424,7 +424,7 @@ jobs:
             pwd
             : "Install OpenBSD packages"
             : "List of packages: https://cdn.openbsd.org/pub/OpenBSD/7.6/packages/amd64/"
-            : pkg_add ...
+            pkg_add g++
             ls -l
             export CPPFLAGS="-I/usr/local/include -Wall"
             export LDFLAGS="-L/usr/local/lib"
@@ -463,10 +463,10 @@ jobs:
           # - the '11.4-gcc' image, that has gcc installed in /opt/csw/bin.
           release: '11.4-gcc'
           mem: 2048
-          #prepare: |
-          #  : "Install Solaris packages"
-          #  : "List of packages: http://pkg.oracle.com/solaris/release/en/index.shtml"
-          #  pkg install ...; ret=$?; test $ret = 0 || test $ret = 4
+          prepare: |
+            : "Install Solaris packages"
+            : "List of packages: http://pkg.oracle.com/solaris/release/en/index.shtml"
+            pkg install gcc-c++; ret=$?; test $ret = 0 || test $ret = 4
           run: |
             set -x
             uname -a
@@ -476,6 +476,7 @@ jobs:
             ls -l
             export CPPFLAGS="-Wall"
             export CC="gcc -m64"
+            export CXX="g++ -m64"
             ./build-on.sh '${{ env.package }}' '' 'make'
       # Doc: https://docs.github.com/en/actions/using-workflows/storing-workflow-data-as-artifacts
       #      https://github.com/actions/upload-artifact?tab=readme-ov-file#usage
@@ -513,7 +514,8 @@ jobs:
             : "List of packages: https://pkg.omnios.org/r151048/core/en/index.shtml"
             pkg install \
                 developer/gcc13 developer/object-file system/header system/library/math \
-                developer/build/gnu-make
+                developer/build/gnu-make \
+                system/library/g++-runtime
           run: |
             set -x
             uname -a
@@ -567,7 +569,7 @@ jobs:
           platform: ${{ matrix.bitness == 32 && 'x86' || 'x86_64' }}
           # Install Cygwin packages.
           # List of packages: https://cygwin.com/packages/package_list.html
-          packages: gcc-core make
+          packages: gcc-core gcc-g++ make
       - name: cygcheck
         run: cygcheck -V
       - name: cygcheck
@@ -629,7 +631,7 @@ jobs:
           platform: x86_64
           # Install Cygwin packages.
           # List of packages: https://cygwin.com/packages/package_list.html
-          packages: ${{ matrix.bitness == 32 && 'mingw64-i686-gcc-core mingw64-i686-headers mingw64-i686-runtime' || 'mingw64-x86_64-gcc-core mingw64-x86_64-headers mingw64-x86_64-runtime' }} make
+          packages: ${{ matrix.bitness == 32 && 'mingw64-i686-gcc-core mingw64-i686-gcc-g++ mingw64-i686-headers mingw64-i686-runtime' || 'mingw64-x86_64-gcc-core mingw64-x86_64-gcc-g++ mingw64-x86_64-headers mingw64-x86_64-runtime' }} make
       - name: cygcheck
         run: cygcheck -V
       - name: cygcheck
@@ -649,6 +651,7 @@ jobs:
           PATH=/usr/${{ matrix.bitness == 32 && 'i686' || 'x86_64' }}-w64-mingw32/sys-root/mingw/bin:$PATH
           export CPPFLAGS="-Wall"
           export CC=${{ matrix.bitness == 32 && 'i686' || 'x86_64' }}-w64-mingw32-gcc
+          export CXX=${{ matrix.bitness == 32 && 'i686' || 'x86_64' }}-w64-mingw32-g++
           ./build-on.sh '${{ env.package }}' '--host=${{ matrix.bitness == 32 && 'i686' || 'x86_64' }}-w64-mingw32' 'make'
       # Doc: https://docs.github.com/en/actions/using-workflows/storing-workflow-data-as-artifacts
       #      https://github.com/actions/upload-artifact?tab=readme-ov-file#usage
@@ -744,6 +747,7 @@ jobs:
           win32_target=_WIN32_WINNT_WINXP
           export CPPFLAGS="-D_WIN32_WINNT=$win32_target"
           export CC="`pwd`/compile cl -nologo"; export CFLAGS="-MD"
+          export CXX="`pwd`/compile cl -nologo"; export CXXFLAGS="-MD"
           export LD="link"
           export NM="dumpbin -symbols"
           export STRIP=":"
@@ -789,6 +793,8 @@ jobs:
           export CPPFLAGS="-Wall"
           export CC="clang -fsanitize=address,undefined,signed-integer-overflow,shift,integer-divide-by-zero -fno-sanitize-recover=undefined"
           export CFLAGS="-O0 -fno-omit-frame-pointer -ggdb"
+          export CXX="clang++ -fsanitize=address,undefined,signed-integer-overflow,shift,integer-divide-by-zero -fno-sanitize-recover=undefined"
+          export CXXFLAGS="-O0 -fno-omit-frame-pointer -ggdb"
           export ASAN_OPTIONS="detect_leaks=0 abort_on_error=1 allocator_may_return_null=1"
           ./build-on.sh '${{ env.package }}' '' 'make'
       # Doc: https://docs.github.com/en/actions/using-workflows/storing-workflow-data-as-artifacts
@@ -836,6 +842,7 @@ jobs:
             ls -l
             export CPPFLAGS="-Wall"
             export CC=clang
+            export CXX=clang++
             ./build-on.sh '${{ env.package }}' '' 'make'
       # Doc: https://docs.github.com/en/actions/using-workflows/storing-workflow-data-as-artifacts
       #      https://github.com/actions/upload-artifact?tab=readme-ov-file#usage
@@ -870,11 +877,12 @@ jobs:
       - run: pwd
       # Install Ubuntu packages.
       # List of packages: https://packages.ubuntu.com/
-      - run: sudo apt update; sudo apt install gcc-riscv64-linux-gnu
+      - run: sudo apt update; sudo apt install g++-riscv64-linux-gnu
       - run: |
           pwd
           export CPPFLAGS="-Wall"
           export CC="riscv64-linux-gnu-gcc"
+          export CXX="riscv64-linux-gnu-g++"
           ./build-on.sh '${{ env.package }}' '--host=riscv64-linux-gnu' 'make'
       # Doc: https://docs.github.com/en/actions/using-workflows/storing-workflow-data-as-artifacts
       #      https://github.com/actions/upload-artifact?tab=readme-ov-file#usage
