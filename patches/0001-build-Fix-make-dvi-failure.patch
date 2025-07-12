@@ -1,12 +1,18 @@
-From d1bd8ddf370b2d50d59150d86a8aaad1b9475930 Mon Sep 17 00:00:00 2001
+From f689ac91e6ee899523811fae23457bb29c8e7220 Mon Sep 17 00:00:00 2001
 From: Bruno Haible <bruno@clisp.org>
 Date: Sat, 12 Jul 2025 18:49:58 +0200
 Subject: [PATCH] build: Fix "make dvi" failure.
 
 * build-aux/epsf.tex: New file, from GNU texinfo.
+* build-aux/local.mk (EXTRA_DIST): Add it.
+
+Alternatively, it would be possible to get this file by installing the
+Debian/Ubuntu package 'texlive-plain-generic'. But this package is 62 MB
+large, quite some overkill when we need only a single file from it.
 ---
  build-aux/epsf.tex | 653 +++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 653 insertions(+)
+ build-aux/local.mk |   1 +
+ 2 files changed, 654 insertions(+)
  create mode 100644 build-aux/epsf.tex
 
 diff --git a/build-aux/epsf.tex b/build-aux/epsf.tex
@@ -668,6 +674,17 @@ index 00000000..847de77f
 +%
 +\let \epsffile = \epsfbox
 +\endinput
+diff --git a/build-aux/local.mk b/build-aux/local.mk
+index 4297e977..76c32afb 100644
+--- a/build-aux/local.mk
++++ b/build-aux/local.mk
+@@ -19,5 +19,6 @@ EXTRA_DIST +=					\
+   build-aux/Linux.valgrind			\
+   build-aux/cross-options.pl			\
+   build-aux/move-if-change			\
++  build-aux/epsf.tex				\
+   build-aux/prev-version.txt			\
+   build-aux/update-b4-copyright
 -- 
 2.43.0
 
