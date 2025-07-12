@@ -24,7 +24,8 @@ package="$1"
 set -e
 
 # Fetch sources (uses package 'git').
-git clone --depth 1 https://git.savannah.gnu.org/git/"$package".git
+# No '--depth 1' here, because we need to run git-version-gen.
+git clone https://git.savannah.gnu.org/git/"$package".git
 (cd "$package" && git submodule update --init submodules/autoconf)
 git clone --depth 1 "${gnulib_url}"
 export GNULIB_SRCDIR=`pwd`/gnulib
