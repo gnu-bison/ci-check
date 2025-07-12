@@ -1,0 +1,37 @@
+From 5b4997d1d308d02dcf220df1aec6687924fb68b8 Mon Sep 17 00:00:00 2001
+From: Bruno Haible <bruno@clisp.org>
+Date: Sat, 12 Jul 2025 08:16:47 +0200
+Subject: [PATCH] build: Don't hardcode the location of the gnulib directory.
+
+* build-aux/move-if-change: Remove symlink.
+* bootstrap.conf (gnulib_extra_files): Add build-aux/move-if-change.
+---
+ bootstrap.conf           | 2 ++
+ build-aux/move-if-change | 1 -
+ 2 files changed, 2 insertions(+), 1 deletion(-)
+ delete mode 120000 build-aux/move-if-change
+
+diff --git a/bootstrap.conf b/bootstrap.conf
+index be0d8e4..68e79df 100644
+--- a/bootstrap.conf
++++ b/bootstrap.conf
+@@ -82,6 +82,8 @@ XGETTEXT_OPTIONS_RUNTIME=$XGETTEXT_OPTIONS'\\\
+ 
+ gnulib_tool_option_extras='--symlink --conditional-dependencies --makefile-name=gnulib.mk --automake-subdir --automake-subdir-tests --po-base=gnulib-po --po-domain=bison'
+ 
++gnulib_extra_files="$gnulib_extra_files build-aux/move-if-change"
++
+ bootstrap_post_import_hook()
+ {
+   # Ensure that ChangeLog exists, for automake.
+diff --git a/build-aux/move-if-change b/build-aux/move-if-change
+deleted file mode 120000
+index 2df61a6..0000000
+--- a/build-aux/move-if-change
++++ /dev/null
+@@ -1 +0,0 @@
+-../gnulib/build-aux/move-if-change
+\ No newline at end of file
+-- 
+2.43.0
+
