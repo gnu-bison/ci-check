@@ -46,7 +46,19 @@ $make > log2 2>&1; rc=$?; cat log2; test $rc = 0 || exit 1
 
 if ! $cross_compiling; then
   # Run the tests.
-  $make check > log3 2>&1; rc=$?; cat log3; test $rc = 0 || exit 1
+  JAVA_VERBOSE=1 $make check > log3 2>&1; rc=$?; cat log3
+  case `uname -s` in
+    CYGWIN*)
+      echo "CYGWIN DEBUG:"
+      echo 'pwd => '; pwd
+      echo 'ls -l examples/java/simple => '; ls -l examples/java/simple
+      echo 'type java => '; type java
+      echo 'env | grep -i java | sort => '; env | grep -i java | sort
+      echo 'cat javaexec.sh => '; cat javaexec.sh
+      echo '(cd examples/java/simple && java Calc) => '; (cd examples/java/simple && java Calc)
+      ;;
+  esac
+  test $rc = 0 || exit 1
 fi
 
 cd ..

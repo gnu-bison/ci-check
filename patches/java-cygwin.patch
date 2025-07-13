@@ -1,0 +1,16 @@
+diff --git a/examples/test b/examples/test
+index 471e1bf2..f736c70b 100755
+--- a/examples/test
++++ b/examples/test
+@@ -54,6 +54,11 @@ if test -x "$abs_medir/$me"; then
+ elif test -f "$abs_medir/$me.class"; then
+     prog ()
+     {
++        case `uname -s` in
++            CYGWIN*)
++                abs_medir=`cygpath -w "$abs_medir"`
++                ;;
++        esac
+         "$SHELL" "$cwd/javaexec.sh" -cp "$abs_medir" "$me" "$@"
+     }
+ else
