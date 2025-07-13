@@ -1,0 +1,13 @@
+diff --git a/doc/local.mk b/doc/local.mk
+index 5895916e..6440f0f8 100644
+--- a/doc/local.mk
++++ b/doc/local.mk
+@@ -113,6 +113,8 @@ $(top_srcdir)/%D%/bison.help: src/bison$(EXEEXT)
+ 	$(AM_V_GEN)$(MKDIR_P) %D%
+ 	$(AM_V_at) LC_ALL=C tests/bison --version >%D%/bison.help.tmp
+ 	$(AM_V_at) LC_ALL=C tests/bison --help | \
++## Normalize newlines on native Windows.
++	  tr -d '\r' | \
+ ## Avoid depending on the path to Bison.
+ 	  sed -e 's,^Usage: .*/bison \[OPTION],Usage: bison [OPTION],g' \
+ ## Avoid variations in the output depending on whether we are
