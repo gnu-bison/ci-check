@@ -454,7 +454,7 @@ jobs:
             pkg_add m4 gmake g++
             export PATH=/usr/local/bin:$PATH
             ls -l
-            export CPPFLAGS="-I/usr/local/include -Wall"
+            export CPPFLAGS="-I/usr/local/include -D_XOPEN_SOURCE=800 -D_BSD_SOURCE -Wall"
             export LDFLAGS="-L/usr/local/lib"
             ./build-on.sh '${{ env.package }}' '' 'gmake'
       # Doc: https://docs.github.com/en/actions/using-workflows/storing-workflow-data-as-artifacts
