@@ -393,7 +393,7 @@ jobs:
             : "List of packages: https://ftp.netbsd.org/pub/pkgsrc/current/pkgsrc/index-all.html"
             /usr/sbin/pkg_add m4-1.4.19nb1
             ls -l
-            export CPPFLAGS="-I/usr/pkg/include -Wall"
+            export CPPFLAGS="-I/usr/pkg/include -D_NETBSD_SOURCE -Wall"
             export LDFLAGS="-L/usr/pkg/lib"
             ./build-on.sh '${{ env.package }}' '' 'make'
       # Doc: https://docs.github.com/en/actions/using-workflows/storing-workflow-data-as-artifacts
