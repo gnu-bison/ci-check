@@ -1,14 +1,15 @@
 diff --git a/doc/local.mk b/doc/local.mk
-index 5895916e..1255e91e 100644
+index 5895916e..4a83695c 100644
 --- a/doc/local.mk
 +++ b/doc/local.mk
-@@ -118,7 +118,9 @@ $(top_srcdir)/%D%/bison.help: src/bison$(EXEEXT)
+@@ -118,7 +118,10 @@ $(top_srcdir)/%D%/bison.help: src/bison$(EXEEXT)
  ## Avoid variations in the output depending on whether we are
  ## on a glibc system.
  	      -e '/translation bugs/d'  >>%D%/bison.help.tmp
 -	$(AM_V_at)$(top_srcdir)/build-aux/move-if-change %D%/bison.help.tmp $@
 +## Normalize newlines on native Windows.
 +	$(AM_V_at)tr -d '\r' <%D%/bison.help.tmp > %D%/bison.help.tmq
++	$(AM_V_at)rm -f %D%/bison.help.tmp
 +	$(AM_V_at)$(top_srcdir)/build-aux/move-if-change %D%/bison.help.tmq $@
  endif ! CROSS_COMPILING
  
