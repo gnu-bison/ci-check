@@ -34,7 +34,7 @@ export GNULIB_SRCDIR=`pwd`/gnulib
 (cd "$package" && patch -p1 < ../patches/0001-build-Don-t-hardcode-the-location-of-the-gnulib-dire.patch)
 (cd "$package" && patch -p1 < ../patches/0001-build-Fix-make-dvi-failure.patch)
 (cd "$package" && patch -p1 < ../patches/bison.help-windows.patch)
-(cd "$package" && patch -p1 < ../patches/java-cygwin.patch)
+(cd "$package" && patch -p1 < ../patches/0001-build-Avoid-failure-of-the-Java-tests-in-Cygwin-base.patch)
 
 cd "$package"
 # Force use of the newest gnulib.
