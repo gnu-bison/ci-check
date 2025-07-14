@@ -659,7 +659,7 @@ jobs:
           platform: x86_64
           # Install Cygwin packages.
           # List of packages: https://cygwin.com/packages/package_list.html
-          packages: m4 ${{ matrix.bitness == 32 && 'mingw64-i686-gcc-core mingw64-i686-gcc-g++ mingw64-i686-headers mingw64-i686-runtime' || 'mingw64-x86_64-gcc-core mingw64-x86_64-gcc-g++ mingw64-x86_64-headers mingw64-x86_64-runtime' }} make
+          packages: m4 ${{ matrix.bitness == 32 && 'mingw64-i686-gcc-core mingw64-i686-gcc-g++ mingw64-i686-headers mingw64-i686-runtime' || 'mingw64-x86_64-gcc-core mingw64-x86_64-gcc-g++ mingw64-x86_64-headers mingw64-x86_64-runtime' }} make perl
       - name: cygcheck
         run: cygcheck -V
       - name: cygcheck
@@ -731,7 +731,7 @@ jobs:
           platform: x86_64
           # Install Cygwin packages.
           # List of packages: https://cygwin.com/packages/package_list.html
-          packages: wget m4 make
+          packages: wget m4 make perl
       - name: cygcheck
         run: cygcheck -V
       - name: cygcheck
