@@ -1,0 +1,13 @@
+--- a/build-aux/ylwrap	2025-07-14 07:41:54.370144500 +0200
++++ b/build-aux/ylwrap	2025-07-16 19:49:04.741129395 +0200
+@@ -103,8 +103,8 @@
+     # Absolute path; do nothing.
+     ;;
+   *)
+-    # Relative path.  Make it absolute.
+-    input=`pwd`/$input
++    # Relative path.  Make it relative to the subdirectory that we will create.
++    input=../$input
+     ;;
+ esac
+ input_rx=`get_dirname "$input" | quote_for_sed`

@@ -44,6 +44,7 @@ rm -f .gitmodules
 { $GNULIB_SRCDIR/build-aux/git-version-gen .tarball-version | sed -e 's/modified//'; date --utc --iso-8601; } > .tarball-version.tmp
 mv .tarball-version.tmp .tarball-version
 ./bootstrap --no-git --gnulib-srcdir="$GNULIB_SRCDIR"
+patch -p1 < patches/ylwrap-mingw.patch
 
 # Configure (uses package 'file').
 ./configure --config-cache CPPFLAGS="-Wall" > log1 2>&1; rc=$?; cat log1; test $rc = 0 || exit 1
