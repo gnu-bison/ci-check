@@ -25,6 +25,9 @@ make="$3"
 set -x
 
 case "$configure_options" in
+  # On native Windows, the tests don't work because they pass Cygwin file names
+  # to the 'bison.exe' executable, which accepts only native Winodws file names.
+  --host=*-mingw*) cross_compiling=true ;;
   --host=riscv*) cross_compiling=true ;;
   *)             cross_compiling=false ;;
 esac
