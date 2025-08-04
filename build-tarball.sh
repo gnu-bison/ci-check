@@ -32,7 +32,6 @@ export GNULIB_SRCDIR=`pwd`/gnulib
 
 # Apply patches.
 (cd "$package" && patch -p1 < ../patches/bison.help-windows.patch)
-(cd "$package" && patch -p1 < ../patches/0001-build-Avoid-failure-of-the-Java-tests-in-Cygwin-base.patch)
 
 cd "$package"
 # Force use of the newest gnulib.
