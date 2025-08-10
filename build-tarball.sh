@@ -31,7 +31,7 @@ git clone --depth 1 "${gnulib_url}"
 export GNULIB_SRCDIR=`pwd`/gnulib
 
 # Apply patches.
-(cd "$package" && patch -p1 < ../patches/bison.help-windows.patch)
+#(cd "$package" && patch -p1 < ../patches/bison.help-windows.patch)
 
 cd "$package"
 # Force use of the newest gnulib.
@@ -41,7 +41,7 @@ rm -f .gitmodules
 { $GNULIB_SRCDIR/build-aux/git-version-gen .tarball-version | sed -e 's/modified//'; date --utc --iso-8601; } > .tarball-version.tmp
 mv .tarball-version.tmp .tarball-version
 ./bootstrap --no-git --gnulib-srcdir="$GNULIB_SRCDIR"
-patch -p1 < ../patches/ylwrap-mingw.patch
+#patch -p1 < ../patches/ylwrap-mingw.patch
 
 # Configure (uses package 'file').
 ./configure --config-cache CPPFLAGS="-Wall" > log1 2>&1; rc=$?; cat log1; test $rc = 0 || exit 1
