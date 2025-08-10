@@ -31,7 +31,6 @@ git clone --depth 1 "${gnulib_url}"
 export GNULIB_SRCDIR=`pwd`/gnulib
 
 # Apply patches.
-(cd "$package" && patch -p1 < ../patches/0001-tests-Fix-test-failures-of-Java-tests-on-Cygwin.patch)
 (cd "$package" && patch -p1 < ../patches/bison.help-windows.patch)
 
 cd "$package"
