@@ -31,7 +31,7 @@ git clone --depth 1 "${gnulib_url}"
 export GNULIB_SRCDIR=`pwd`/gnulib
 
 # Apply patches.
-#(cd "$package" && patch -p1 < ../patches/bison.help-windows.patch)
+(cd "$package" && patch -p1 < ../patches/bison.help-windows.patch)
 
 cd "$package"
 # Force use of the newest gnulib.
