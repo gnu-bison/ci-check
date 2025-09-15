@@ -1,0 +1,10 @@
+diff --git a/.gitmodules b/.gitmodules
+index b50d66ee..5a598a99 100644
+--- a/.gitmodules
++++ b/.gitmodules
+@@ -3,4 +3,4 @@
+ 	url = git://git.savannah.gnu.org/gnulib.git
+ [submodule "submodules/autoconf"]
+ 	path = submodules/autoconf
+-	url = git://git.sv.gnu.org/autoconf.git
++	url = git://git.savannah.gnu.org/autoconf.git
