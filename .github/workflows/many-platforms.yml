@@ -388,7 +388,7 @@ jobs:
             pwd
             : "Install NetBSD packages"
             : "List of packages: https://ftp.netbsd.org/pub/pkgsrc/current/pkgsrc/index-all.html"
-            /usr/sbin/pkg_add m4-1.4.19nb1
+            /usr/sbin/pkg_add m4-1.4.21
             ls -l
             export CPPFLAGS="-I/usr/pkg/include -D_NETBSD_SOURCE -Wall"
             export LDFLAGS="-L/usr/pkg/lib"
